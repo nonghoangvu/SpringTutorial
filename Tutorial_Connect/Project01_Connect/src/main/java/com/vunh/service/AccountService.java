@@ -5,6 +5,8 @@ import com.vunh.entity.Role;
 import com.vunh.repository.AccountRepository;
 import com.vunh.repository.RoleRepository;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -19,6 +21,9 @@ public class AccountService {
 
     public List<Account> getAll() {
         return this.accountRepository.findAll();
+    }
+    public Page<Account> getAll(Pageable pageable) {
+        return this.accountRepository.findAll(pageable);
     }
 
     public List<Role> getRole() {
@@ -37,4 +42,9 @@ public class AccountService {
     public void delete(Account account) {
         this.accountRepository.delete(account);
     }
+
+    public Boolean existByUsername(String username) {
+        return this.accountRepository.findByUsername(username) == null;
+    }
+
 }

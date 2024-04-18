@@ -12,33 +12,32 @@
 </head>
 <body>
 <div class="container">
-    <h1 class="text-center">Edit Account</h1>
-    <form action="/update?id=${ACCOUNT.id}" method="post">
+    <h1 class="text-center">Update Account</h1>
+    <form:form action="/update?id=${ACCOUNT.id}&name=${ACCOUNT.username}" method="post" modelAttribute="ACCOUNT">
+        <form:errors path="*" cssClass="alert alert-danger" element="div"></form:errors>
         <div class="form-floating mb-3">
-            <input type="text" class="form-control" id="username" name="username" value="${ACCOUNT.username}">
+            <form:input type="text" class="form-control" id="username" path="username" maxlength="10"/>
             <label for="username">Username</label>
         </div>
         <div class="form-floating mb-3">
-            <input type="password" class="form-control" id="password" name="password" value="${ACCOUNT.password}">
+            <form:input type="password" class="form-control" id="password" path="password"/>
             <label for="password">Password</label>
         </div>
         <div class="form-floating mb-3">
-            <input type="text" class="form-control" id="fullname" name="fullname" value="${ACCOUNT.fullname}">
-            <label for="fullname">Fullname</label>
+            <form:input type="text" class="form-control" id="fullname" path="fullName"/>
+            <label for="fullName">FullName</label>
         </div>
         <div class="form-floating mb-3">
-            <select class="form-select" name="role">
+            <form:select path="role" class="form-select">
                 <option selected disabled>Role</option>
-                <c:forEach items="${ROLES}" var="role">
-                    <option ${ACCOUNT.role.id == role.id ? "selected" : ""} value="${role.id}">${role.roleKey}</option>
-                </c:forEach>
-            </select>
+                <form:options items="${ROLES}" itemValue="id" itemLabel="roleKey"/>
+            </form:select>
         </div>
         <div class="text-center">
             <a href="/" class="btn btn-danger">Back</a>
-            <button class="btn btn-warning">Save</button>
+            <button type="submit" class="btn btn-warning">Save</button>
         </div>
-    </form>
+    </form:form>
 </div>
 </body>
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js"

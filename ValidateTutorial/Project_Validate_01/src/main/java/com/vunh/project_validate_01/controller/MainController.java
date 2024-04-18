@@ -15,5 +15,4 @@ public class MainController {
         System.out.println(user.getUsername());
         return "index";
     }
-
 }

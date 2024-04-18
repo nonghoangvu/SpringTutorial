@@ -9,36 +9,35 @@
     <title>Nong Hoang Vu</title>
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css"
           integrity="sha384-1BmE4kWBq78iYhFldvKuhfTAU6auU8tT94WrHftjDbrCEXSU1oBoqyl2QvZ6jIW3" crossorigin="anonymous">
-</head>
+</head> 
 <body>
 <div class="container">
     <h1 class="text-center">Create Account</h1>
-    <form action="/store" method="post">
+    <form:form action="/create" method="post" modelAttribute="ACCOUNT">
+        <form:errors path="*" cssClass="alert alert-danger" element="div"></form:errors>
         <div class="form-floating mb-3">
-            <input type="text" class="form-control" id="username" name="username">
+            <form:input type="text" class="form-control" id="username" path="username" maxlength="10"/>
             <label for="username">Username</label>
         </div>
         <div class="form-floating mb-3">
-            <input type="password" class="form-control" id="password" name="password">
+            <form:input type="password" class="form-control" id="password" path="password"/>
             <label for="password">Password</label>
         </div>
         <div class="form-floating mb-3">
-            <input type="text" class="form-control" id="fullname" name="fullname">
-            <label for="fullname">Fullname</label>
+            <form:input type="text" class="form-control" id="fullName" path="fullName"/>
+            <label for="fullName">Fullname</label>
         </div>
         <div class="form-floating mb-3">
-            <select class="form-select" name="role">
+            <form:select path="role" class="form-select">
                 <option selected disabled>Role</option>
-                <c:forEach items="${ROLES}" var="role">
-                    <option value="${role.id}">${role.roleKey}</option>
-                </c:forEach>
-            </select>
+                <form:options items="${ROLES}" itemValue="id" itemLabel="roleKey"/>
+            </form:select>
         </div>
         <div class="text-center">
             <a href="/" class="btn btn-danger">Back</a>
-            <button class="btn btn-warning">Save</button>
+            <button type="submit" class="btn btn-warning">Save</button>
         </div>
-    </form>
+    </form:form>
 </div>
 </body>
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js"
