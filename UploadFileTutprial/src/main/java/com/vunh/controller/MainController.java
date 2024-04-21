@@ -38,7 +38,6 @@ public class MainController {
             Files.copy(inputStream, path.resolve(photo.getOriginalFilename()), StandardCopyOption.REPLACE_EXISTING);
             info.setPhoto(photo.getOriginalFilename());
             model.addAttribute("INFO", info);
-            System.out.println(info.getPhoto());
         }catch (Exception e){
             log.info(e.toString());
         }

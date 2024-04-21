@@ -28,7 +28,21 @@ CREATE TABLE [Employee](
 	[id_country] INT FOREIGN KEY REFERENCES [Country]([id]),
 	[create_date] DATE DEFAULT GETDATE()
 )
-
+GO
+CREATE TABLE [Image](
+	[id] INT IDENTITY PRIMARY KEY,
+	[url] NVARCHAR(200) NOT NULL UNIQUE,
+	[create_date] DATE DEFAULT GETDATE()
+)
+GO
+CREATE TABLE [Product](
+	[id] INT IDENTITY PRIMARY KEY,
+	[product_name] NVARCHAR(100) NOT NULL,
+	[price] INT NOT NULL,
+	[description] NVARCHAR(MAX),
+	[id_image] INT FOREIGN KEY REFERENCES [Image] ([id]),
+	[create_date] DATE DEFAULT GETDATE()
+)
 GO
 INSERT INTO [Role] ([role_key]) VALUES ('Admin'), ('User')
 GO

@@ -3,16 +3,10 @@ package com.vunh.controller;
 import com.vunh.entity.Employee;
 import com.vunh.service.EmployeeService;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.data.domain.Page;
-import org.springframework.data.domain.PageRequest;
-import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.*;
 import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
-import java.util.List;
 import java.util.Optional;
 
 @Controller
@@ -28,4 +22,26 @@ public class RestfullAPI {
         return this.employeeService.getAll(pageable);
     }
 
+    @PostMapping("/add")
+    Employee store(@RequestBody Employee employee) {
+        this.employeeService.add(employee);
+        return employee;
+    }
+
+    @PostMapping("/update")
+    Employee update(@RequestBody Employee employee) {
+        this.employeeService.add(employee);
+        return employee;
+    }
+
+    @GetMapping("/id-employee")
+    Employee findById(@RequestParam("id") Integer id) {
+        return this.employeeService.getById(id).orElseGet(Employee::new);
+    }
+
+    @GetMapping("/delete")
+    String delete(@RequestParam("id") Integer id){
+        this.employeeService.delete(id);
+        return STR."Remove successfully id \{id}";
+    }
 }
