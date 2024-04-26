@@ -12,11 +12,26 @@
 <body>
 <div class="container m-5">
     <h1>Name: ${product.productName}</h1>
-    <c:forEach var="i" items="${product.url}">
-        <span>${i}</span>
-        <div class="input-group mb-3">
-            <img src="/img/${i}" class="img-thumbnail" alt="...">
+    <h1>Name: ${product.url}</h1>
+    <div id="carouselExample" class="carousel slide">
+        <div class="carousel-inner">
+            <c:forEach var="i" items="${product.url}">
+                <div class="carousel-item active">
+                    <img src="/img/${i}" class="d-block w-100 h-100" alt="...">
+                </div>
+            </c:forEach>
         </div>
+        <button class="carousel-control-prev" type="button" data-bs-target="#carouselExample" data-bs-slide="prev">
+            <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+            <span class="visually-hidden">Previous</span>
+        </button>
+        <button class="carousel-control-next" type="button" data-bs-target="#carouselExample" data-bs-slide="next">
+            <span class="carousel-control-next-icon" aria-hidden="true"></span>
+            <span class="visually-hidden">Next</span>
+        </button>
+    </div>
+    <c:forEach var="i" items="${product.url}">
+        <img src="/img/${i}" class="d-block w-50" alt="...">
     </c:forEach>
 </div>
 </body>
