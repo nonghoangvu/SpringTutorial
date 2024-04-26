@@ -133,3 +133,13 @@ CREATE TABLE [OrderItems](
 	[add_date] DATE DEFAULT GETDATE() NULL,
 	[last_edited] DATE DEFAULT GETDATE() NULL
 )
+
+SELECT UserAccountDetail.name, UserAccount.phone_number, UserAccount.email, UserAccount.password, UserRole.role_name, UserAccountDetail.gender,
+UserAccountDetail.date_of_birth, UserAddress.city, UserAddress.district, UserAddress.specific_information, UserAccount.is_locked
+FROM UserAccount 
+INNER JOIN UserRole
+ON UserAccount.id_user_role = UserRole.id
+INNER JOIN UserAccountDetail
+ON UserAccount.id = UserAccountDetail.id_user_account
+INNER JOIN UserAddress
+ON UserAccountDetail.id_user_address = UserAddress.id
