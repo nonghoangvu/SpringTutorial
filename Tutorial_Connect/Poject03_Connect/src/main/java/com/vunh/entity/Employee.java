@@ -16,6 +16,7 @@ import java.util.Date;
 public class Employee {
     @Id
     @Column(name = "id")
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
 
     @Column(name = "fullname")
@@ -32,5 +33,5 @@ public class Employee {
     private Country country;
 
     @Column(name = "create_date")
-    private Date createDate;
+    private Date createDate = new Date();
 }

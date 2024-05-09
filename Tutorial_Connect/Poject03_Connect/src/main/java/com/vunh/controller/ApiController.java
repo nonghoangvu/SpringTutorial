@@ -13,13 +13,23 @@ public class ApiController {
     private EmployeeRepo employeeRepo;
 
     @GetMapping
-    List<Employee> index(){
+    List<Employee> index() {
         return this.employeeRepo.findAll();
     }
 
     @GetMapping("/delete")
-    String delete(@RequestParam("id") Integer id){
+    String delete(@RequestParam("id") Integer id) {
         this.employeeRepo.deleteById(id);
         return "Remove successfully";
+    }
+
+    @PostMapping
+    Employee store(@RequestBody Employee employee) {
+        return this.employeeRepo.save(employee);
+    }
+
+    @PutMapping
+    Employee update(@RequestBody Employee employee) {
+        return this.employeeRepo.save(employee);
     }
 }
