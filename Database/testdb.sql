@@ -1,0 +1,10 @@
+CREATE DATABASE testdb
+GO 
+USE testdb
+GO
+CREATE TABLE [User](
+	[id] INT IDENTITY PRIMARY KEY,
+	[username] NVARCHAR(30) UNIQUE,
+	[password] NVARCHAR(200),
+	[role] NVARCHAR(20)
+)
