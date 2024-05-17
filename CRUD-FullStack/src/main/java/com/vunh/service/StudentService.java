@@ -3,6 +3,8 @@ package com.vunh.service;
 import com.vunh.entity.Student;
 import com.vunh.repository.StudentRepository;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -14,6 +16,10 @@ public class StudentService {
 
     public List<Student> getAllStudents() {
         return this.studentRepository.findAll();
+    }
+
+    public Page<Student> getAllStudents(Pageable pageable, String q) {
+        return this.studentRepository.findAll(pageable, q);
     }
 
     public Student getStudentById(Integer id) {
