@@ -1,0 +1,162 @@
+CREATE DATABASE BlueCrabCouture;
+
+USE BlueCrabCouture;
+
+CREATE TABLE UserRole(
+    id INT AUTO_INCREMENT PRIMARY KEY NOT NULL,
+    role_name NVARCHAR(20) UNIQUE NOT NULL,
+    create_date DATETIME DEFAULT CURRENT_TIMESTAMP
+);
+
+CREATE TABLE UserAccount(
+    id INT AUTO_INCREMENT PRIMARY KEY NOT NULL,
+    phone_number NVARCHAR(13) UNIQUE NOT NULL,
+    email NVARCHAR(100) UNIQUE NOT NULL,
+    password NVARCHAR(50) NOT NULL,
+    id_user_role INT,
+    is_locked BIT DEFAULT 0 NOT NULL,
+    create_date DATETIME DEFAULT CURRENT_TIMESTAMP,
+    FOREIGN KEY (id_user_role) REFERENCES UserRole(id)
+);
+
+CREATE TABLE UserAddress(
+    id INT AUTO_INCREMENT PRIMARY KEY,
+    city NVARCHAR(50) NOT NULL,
+    district NVARCHAR(50) NOT NULL,
+    specific_information NVARCHAR(255) NOT NULL
+);
+
+CREATE TABLE UserAccountDetail(
+    id INT AUTO_INCREMENT PRIMARY KEY NOT NULL,
+    name NVARCHAR(50),
+    gender BIT DEFAULT 0,
+    date_of_birth DATETIME,
+    avatar NVARCHAR(255),
+    id_user_account INT UNIQUE,
+    id_user_address INT UNIQUE,
+    last_edited DATETIME DEFAULT CURRENT_TIMESTAMP,
+    FOREIGN KEY (id_user_account) REFERENCES UserAccount(id),
+    FOREIGN KEY (id_user_address) REFERENCES UserAddress(id)
+);
+
+CREATE TABLE Category(
+    id INT AUTO_INCREMENT PRIMARY KEY NOT NULL,
+    url_logo NVARCHAR(255),
+    name NVARCHAR(50) NOT NULL UNIQUE,
+    create_date DATETIME DEFAULT CURRENT_TIMESTAMP
+);
+
+CREATE TABLE Brand(
+    id INT AUTO_INCREMENT PRIMARY KEY NOT NULL,
+    url_logo NVARCHAR(255),
+    name NVARCHAR(50) NOT NULL UNIQUE,
+    create_date DATETIME DEFAULT CURRENT_TIMESTAMP
+);
+
+CREATE TABLE Color(
+    id INT AUTO_INCREMENT PRIMARY KEY NOT NULL,
+    color_code NVARCHAR(20) NOT NULL,
+    name NVARCHAR(20) UNIQUE NOT NULL,
+    create_date DATETIME DEFAULT CURRENT_TIMESTAMP
+);
+
+CREATE TABLE Size(
+    id INT AUTO_INCREMENT PRIMARY KEY NOT NULL,
+    name NVARCHAR(20) UNIQUE NOT NULL,
+    create_date DATETIME DEFAULT CURRENT_TIMESTAMP
+);
+
+CREATE TABLE Image(
+    id INT AUTO_INCREMENT PRIMARY KEY NOT NULL,
+    url NVARCHAR(100) UNIQUE NOT NULL,
+    create_date DATETIME DEFAULT CURRENT_TIMESTAMP
+);
+
+CREATE TABLE Product(
+    id INT AUTO_INCREMENT PRIMARY KEY NOT NULL,
+    code NVARCHAR(255),
+    name NVARCHAR(255) NOT NULL,
+    sold INT DEFAULT 0,
+    id_image INT,
+    is_deleted BIT DEFAULT 0,
+    id_user_account INT NOT NULL,
+    create_date DATETIME DEFAULT CURRENT_TIMESTAMP,
+    FOREIGN KEY (id_image) REFERENCES Image(id),
+    FOREIGN KEY (id_user_account) REFERENCES UserAccount(id)
+);
+
+CREATE TABLE ProductDetail(
+    id INT AUTO_INCREMENT PRIMARY KEY NOT NULL,
+    id_category INT NOT NULL,
+    id_brand INT NOT NULL,
+    id_color INT NOT NULL,
+    id_size INT NOT NULL,
+    id_product INT NOT NULL,
+    price DECIMAL(10, 2) CHECK (price > 10) NOT NULL,
+    quantity INT DEFAULT 0,
+    create_date DATETIME DEFAULT CURRENT_TIMESTAMP,
+    FOREIGN KEY (id_category) REFERENCES Category(id),
+    FOREIGN KEY (id_brand) REFERENCES Brand(id),
+    FOREIGN KEY (id_color) REFERENCES Color(id),
+    FOREIGN KEY (id_size) REFERENCES Size(id),
+    FOREIGN KEY (id_product) REFERENCES Product(id)
+);
+
+CREATE TABLE ShoppingCart(
+    id INT AUTO_INCREMENT PRIMARY KEY NOT NULL,
+    id_user INT NOT NULL,
+    quantity_product INT DEFAULT 0,
+    total_money DECIMAL(10, 2) DEFAULT 0,
+    FOREIGN KEY (id_user) REFERENCES UserAccount(id)
+);
+
+CREATE TABLE ShoppingCartDetail(
+    id INT AUTO_INCREMENT PRIMARY KEY NOT NULL,
+    price DECIMAL(10, 2),
+    quantity INT CHECK (quantity > 1),
+    id_shopping_cart INT NOT NULL,
+    id_product_detail INT NOT NULL,
+    add_date DATETIME DEFAULT CURRENT_TIMESTAMP,
+    last_edited DATE DEFAULT CURRENT_TIMESTAMP,
+    FOREIGN KEY (id_shopping_cart) REFERENCES ShoppingCart(id),
+    FOREIGN KEY (id_product_detail) REFERENCES ProductDetail(id)
+);
+
+CREATE TABLE InvoiceStatus(
+    id INT AUTO_INCREMENT PRIMARY KEY NOT NULL,
+    name NVARCHAR(50) UNIQUE NOT NULL
+);
+
+CREATE TABLE Orders(
+    id INT AUTO_INCREMENT PRIMARY KEY NOT NULL,
+    code_order NVARCHAR(50) UNIQUE NOT NULL,
+    id_user_account INT NOT NULL,
+    id_status_invoice INT NOT NULL,
+    total_money DECIMAL(10, 2) DEFAULT 0,
+    quantity_product INT DEFAULT 0,
+    create_date DATETIME DEFAULT CURRENT_TIMESTAMP,
+    FOREIGN KEY (id_user_account) REFERENCES UserAccount(id),
+    FOREIGN KEY (id_status_invoice) REFERENCES InvoiceStatus(id)
+);
+
+CREATE TABLE OrderItems(
+    id INT AUTO_INCREMENT PRIMARY KEY NOT NULL,
+    id_order INT NOT NULL,
+    price DECIMAL(10, 2) NOT NULL,
+    quantity INT CHECK (quantity > 1),
+    id_product_detail INT NOT NULL,
+    add_date DATETIME DEFAULT CURRENT_TIMESTAMP,
+    last_edited DATETIME DEFAULT CURRENT_TIMESTAMP,
+    FOREIGN KEY (id_order) REFERENCES Orders(id),
+    FOREIGN KEY (id_product_detail) REFERENCES ProductDetail(id)
+);
+
+SELECT UserAccountDetail.name, UserAccount.phone_number, UserAccount.email, UserAccount.password, UserRole.role_name, UserAccountDetail.gender,
+UserAccountDetail.date_of_birth, UserAddress.city, UserAddress.district, UserAddress.specific_information, UserAccount.is_locked
+FROM UserAccount 
+INNER JOIN UserRole
+ON UserAccount.id_user_role = UserRole.id
+INNER JOIN UserAccountDetail
+ON UserAccount.id = UserAccountDetail.id_user_account
+INNER JOIN UserAddress
+ON UserAccountDetail.id_user_address = UserAddress.id;

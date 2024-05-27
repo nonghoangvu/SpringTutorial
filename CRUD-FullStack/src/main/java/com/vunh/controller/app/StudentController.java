@@ -20,6 +20,7 @@ public class StudentController {
     @Autowired
     private StudentService studentService;
 
+    //Pagination, sort and search
     @GetMapping
     String index(Model model, @RequestParam("p") Optional<Integer> p, @RequestParam("l") Optional<Integer> l, @RequestParam("q") Optional<String> q, @RequestParam("sortBy") Optional<String> sort) {
         Pageable pageable = PageRequest.of(p.orElse(0), l.orElse(5), Sort.Direction.ASC, sort.orElse("id"));

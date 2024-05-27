@@ -1,4 +1,5 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<%@ taglib prefix="form" uri="http://www.springframework.org/tags/form" %>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <html>
 <head>
@@ -12,17 +13,21 @@
 <body>
 <div class="container">
     <h1 class=" text-center">Register</h1>
-    <form action="/register" method="post">
+    <form:form action="/register" method="post" modelAttribute="user">
+        <form:errors path="*" element="div" cssClass="alert-danger alert"/>
         <div class="mb-3">
             <label for="username" class="form-label">Username</label>
-            <input type="text" class="form-control" id="username" name="username">
+            <form:input path="username" type="text" class="form-control" id="username" name="username"/>
         </div>
         <div class="mb-3">
             <label for="password" class="form-label">Password</label>
-            <input type="password" class="form-control" id="password" name="password">
+            <form:input path="password" type="password" class="form-control" id="password" name="password"/>
         </div>
-        <button type="submit" class="btn btn-primary">Submit</button>
-    </form>
+        <div class="mb-3">
+            <form:checkbox path="role" cssClass="form-check-label form-check-input" value="ADMIN" label="Role"/>
+        </div>
+        <button type="submit" class="btn btn-primary">Register</button>
+    </form:form>
 </div>
 </body>
 </html>

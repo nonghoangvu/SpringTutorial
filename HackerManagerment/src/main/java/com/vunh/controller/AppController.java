@@ -30,14 +30,12 @@ public class AppController {
     @PostMapping("store")
     String store(@Validated @ModelAttribute("hacker") Hacker hacker, BindingResult result, Model model) {
         if (result.hasErrors()) {
-            model.addAttribute("hacker", hacker);
             model.addAttribute("hackers", this.hackerService.getHackers());
             model.addAttribute("listMajor", this.hackerService.getListMajor());
             return "index";
-        } else {
-            this.hackerService.storeHacker(hacker);
-            return "redirect:/hacker";
         }
+        this.hackerService.storeHacker(hacker);
+        return "redirect:/hacker";
     }
 
     @GetMapping("/{id}")
@@ -51,15 +49,12 @@ public class AppController {
     @PostMapping("update")
     String update(@Validated @ModelAttribute("hacker") Hacker hacker, BindingResult result, Model model) {
         if (result.hasErrors()) {
-            model.addAttribute("hacker", hacker);
             model.addAttribute("hackers", this.hackerService.getHackers());
             model.addAttribute("listMajor", this.hackerService.getListMajor());
             return "index";
-        } else {
-
-            this.hackerService.updateHacker(hacker);
-            return "redirect:/hacker";
         }
+        this.hackerService.updateHacker(hacker);
+        return "redirect:/hacker";
     }
 
     @GetMapping("delete/{id}")

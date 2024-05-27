@@ -1,0 +1,18 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <link rel="stylesheet" type="text/css" th:href="@{/webjars/bootstrap/css/bootstrap.min.css}">
+    <title>Nong Hoang Vu</title>
+</head>
+<body>
+<div class="container text-danger">
+    <h1 class="text-center">String data</h1>
+    <ul>
+        <th:block th:each="s : ${data}">
+            <li>[[${s.name}]]</li>
+        </th:block>
+    </ul>
+</div>
+</body>
+</html>

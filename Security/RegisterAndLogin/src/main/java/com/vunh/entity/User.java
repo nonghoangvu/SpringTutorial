@@ -7,11 +7,13 @@ import lombok.Getter;
 import lombok.Setter;
 import org.hibernate.annotations.Nationalized;
 import org.hibernate.validator.constraints.Length;
+import org.springframework.stereotype.Component;
 
 @Getter
 @Setter
 @Entity
 @Table(name = "\"User\"")
+@Component
 public class User {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)

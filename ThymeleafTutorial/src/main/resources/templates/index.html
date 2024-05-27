@@ -1,0 +1,14 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <link rel="stylesheet" type="text/css" th:href="@{/webjars/bootstrap/css/bootstrap.min.css}">
+    <title>Nong Hoang Vu</title>
+</head>
+<body>
+<div class="container text-danger">
+    <h1 th:text="${'Say: ' + message}"></h1>
+    <a th:href="@{/goto}">Click me</a>
+</div>
+</body>
+</html>
